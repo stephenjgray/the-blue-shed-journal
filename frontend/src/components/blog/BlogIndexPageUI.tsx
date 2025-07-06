@@ -18,8 +18,8 @@ import {
 import { usePathname } from "next/navigation";
 
 // Function to format date
-function formatDate(dateString: string, locale: string) {
-  return new Date(dateString).toLocaleDateString(locale, {
+function formatDate(dateString: string) {
+  return new Date(dateString).toLocaleDateString(i18n.defaultLocale, {
     year: "numeric",
     month: "short", 
     day: "numeric",
@@ -50,7 +50,6 @@ interface BlogIndexPageUIProps {
   posts: BlogIndexPagePost[];
   pagination: PaginationData;
   dictionary: Dictionary['blog'];
-  locale: string;
 }
 
 export default function BlogIndexPageUI({
@@ -58,7 +57,6 @@ export default function BlogIndexPageUI({
   posts,
   pagination,
   dictionary,
-  locale,
 }: BlogIndexPageUIProps) {
   const layout = config?.layout || "grid";
   const { currentPage, totalPages } = pagination;
@@ -108,7 +106,7 @@ export default function BlogIndexPageUI({
           {posts.map((post) => (
             <Link
               key={post._id}
-              href={`/${locale}/blog/${post.slug?.current || ""}`}
+              href={`/blog/${post.slug?.current || ""}`}
               className="flex flex-col gap-4 hover:opacity-90 transition-opacity group"
             >
               <div className="bg-muted rounded-md aspect-video overflow-hidden">
@@ -128,7 +126,7 @@ export default function BlogIndexPageUI({
                 ) : null}
                 {post.publishedAt && (
                   <span className="text-sm text-muted-foreground">
-                    {formatDate(post.publishedAt, locale)}
+                    {formatDate(post.publishedAt)}
                   </span>
                 )}
               </div>
@@ -184,7 +182,7 @@ export default function BlogIndexPageUI({
                   <Badge className="w-fit">{posts[0].categories[0].title || ""}</Badge>
                 ) : null}
                 <h2 className="text-3xl font-bold tracking-tight">
-                  <Link href={`/${locale}/blog/${posts[0].slug?.current || ""}`} className="hover:text-primary transition-colors">
+                  <Link href={`/blog/${posts[0].slug?.current || ""}`} className="hover:text-primary transition-colors">
                     {posts[0].title || ""}
                   </Link>
                 </h2>
@@ -209,7 +207,7 @@ export default function BlogIndexPageUI({
                         <p className="text-sm font-medium">{posts[0].author.name || ""}</p>
                         {posts[0].publishedAt && (
                           <p className="text-xs text-muted-foreground">
-                            {formatDate(posts[0].publishedAt, locale)}
+                            {formatDate(posts[0].publishedAt)}
                           </p>
                         )}
                       </div>
@@ -225,7 +223,7 @@ export default function BlogIndexPageUI({
               {posts.slice(1).map((post) => (
                 <Link
                   key={post._id}
-                  href={`/${locale}/blog/${post.slug?.current || ""}`}
+                  href={`/blog/${post.slug?.current || ""}`}
                   className="flex flex-col gap-4 hover:opacity-90 transition-opacity group"
                 >
                   <div className="bg-muted rounded-md aspect-video overflow-hidden">
@@ -245,7 +243,7 @@ export default function BlogIndexPageUI({
                     ) : null}
                     {post.publishedAt && (
                       <span className="text-sm text-muted-foreground">
-                        {formatDate(post.publishedAt, locale)}
+                        {formatDate(post.publishedAt)}
                       </span>
                     )}
                   </div>
@@ -272,7 +270,7 @@ export default function BlogIndexPageUI({
               <div className="flex flex-col md:flex-row gap-8">
                 {post.mainImage?.asset?._ref && (
                   <div className="md:w-1/3 bg-muted rounded-md aspect-video overflow-hidden">
-                    <Link href={`/${locale}/blog/${post.slug?.current || ""}`} className="block">
+                    <Link href={`/blog/${post.slug?.current || ""}`} className="block">
                       <Image
                         src={urlFor(post.mainImage).url()}
                         alt={post.mainImage.alt || ""}
@@ -288,7 +286,7 @@ export default function BlogIndexPageUI({
                     <Badge className="w-fit">{post.categories[0].title || ""}</Badge>
                   ) : null}
                   <h2 className="text-2xl font-medium">
-                    <Link href={`/${locale}/blog/${post.slug?.current || ""}`} className="hover:text-primary transition-colors">
+                    <Link href={`/blog/${post.slug?.current || ""}`} className="hover:text-primary transition-colors">
                       {post.title || ""}
                     </Link>
                   </h2>
@@ -314,7 +312,7 @@ export default function BlogIndexPageUI({
                     )}
                     {post.publishedAt && (
                       <span className="text-sm text-muted-foreground">
-                        {formatDate(post.publishedAt, locale)}
+                        {formatDate(post.publishedAt)}
                       </span>
                     )}
                   </div>
