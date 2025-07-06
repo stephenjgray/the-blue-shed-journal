@@ -5,7 +5,6 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { CodeBlock } from "./CodeBlock";
 import type { Dictionary } from "@/i18n/getDictionary";
-import type { Locale } from "@/i18n/i18n-config";
 import {
 	PortableText,
 	type PortableTextReactComponents,
@@ -75,7 +74,6 @@ export interface ExpandedBlogPost {
 interface BlogPostPageProps {
 	post: ExpandedBlogPost;
 	dictionary?: Dictionary;
-	locale: Locale; // Add locale prop
 }
 
 // Social icon mapping
@@ -88,7 +86,7 @@ const SocialIcons = {
 	youtube: Youtube,
 } as const;
 
-export default function BlogPostPage({ post, dictionary, locale }: BlogPostPageProps) {
+export default function BlogPostPage({ post, dictionary }: BlogPostPageProps) {
 	// Use dictionary from props with fallback
 	const staticText = dictionary ? {
 		...dictionary.general,
@@ -218,11 +216,10 @@ export default function BlogPostPage({ post, dictionary, locale }: BlogPostPageP
 				const href = value?.href || "";
 				const isInternal = href.startsWith("/") || href.startsWith("#") || (!href.startsWith("http") && !href.startsWith("mailto"));
 				const target = isInternal ? undefined : "_blank";
-				const localizedHref = isInternal ? `/${locale}${href}` : href;
 
 				return (
 					<Link
-						href={localizedHref}
+						href={href}
 						target={target}
 						className="text-primary hover:underline"
 					>
@@ -264,7 +261,7 @@ export default function BlogPostPage({ post, dictionary, locale }: BlogPostPageP
             if (categoryToDisplay && categoryToDisplay.slug?.current && categoryToDisplay.title) {
               return (
                 <Link
-                  href={`/${locale}/blog/category/${categoryToDisplay.slug.current}`}
+                  href={`/blog/category/${categoryToDisplay.slug.current}`}
                   // Use the _id of the localized category if available, otherwise the original reference's _id.
                   key={categoryWrapper.localized?._id || categoryWrapper.originalReferenceId || categoryWrapper._id}
                 >
@@ -305,7 +302,7 @@ export default function BlogPostPage({ post, dictionary, locale }: BlogPostPageP
 
 						<div>
 							<Link
-								href={`/${locale}/blog/author/${post.author.slug?.current}`}
+								href={`/blog/author/${post.author.slug?.current}`}
 								className="font-medium hover:underline"
 							>
 								{post.author.name}
@@ -399,7 +396,7 @@ export default function BlogPostPage({ post, dictionary, locale }: BlogPostPageP
 
 							<div className="flex-1">
 								<Link
-									href={`/${locale}/blog/author/${post.author.slug?.current}`}
+									href={`/blog/author/${post.author.slug?.current}`}
 									className="text-lg font-medium hover:underline"
 								>
 									{post.author.name}
