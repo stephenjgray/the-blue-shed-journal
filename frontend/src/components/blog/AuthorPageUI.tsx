@@ -11,7 +11,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Github, Globe, Instagram, Linkedin, Mail, Twitter, Youtube } from "lucide-react";
 import type { Dictionary } from "@/i18n/getDictionary";
-import type { Locale } from "@/i18n/i18n-config";
+import { i18n } from "@/i18n/i18n-config";
 
 export interface ExpandedBlogPost extends Omit<BlogPost, "categories" | "author"> {
 	categories?: Category[];
@@ -22,7 +22,6 @@ export interface AuthorPageUIProps {
 	author: Author;
 	posts: ExpandedBlogPost[];
 	dictionary: Dictionary;
-	locale: Locale; // Add locale prop
 }
 
 // Social icon mapping
@@ -36,9 +35,9 @@ const SocialIcons = {
 } as const;
 
 // Helper function to format date
-function formatDate(dateString?: string, locale?: Locale) {
+function formatDate(dateString?: string) {
 	if (!dateString) return "";
-	return new Date(dateString).toLocaleDateString(locale || "en-US", {
+	return new Date(dateString).toLocaleDateString(i18n.defaultLocale, {
 		year: "numeric",
 		month: "short",
 		day: "numeric",
@@ -56,7 +55,7 @@ function getInitials(name?: string) {
 		.substring(0, 2);
 }
 
-export default function AuthorPageUI({ author, posts, dictionary, locale }: AuthorPageUIProps) {
+export default function AuthorPageUI({ author, posts, dictionary }: AuthorPageUIProps) {
 	const staticText = {
 		...dictionary.general,
 		...dictionary.author,
@@ -174,7 +173,7 @@ export default function AuthorPageUI({ author, posts, dictionary, locale }: Auth
 						<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
 							{posts.map((post) => (
 								<Link
-									href={`/${locale}/blog/${post.slug?.current}`}
+									href={`/blog/${post.slug?.current}`}
 									key={post._id}
 									className="flex flex-col gap-4 group hover:opacity-80 transition-opacity"
 								>
@@ -199,7 +198,7 @@ export default function AuthorPageUI({ author, posts, dictionary, locale }: Auth
 											<Badge variant="secondary">{post.categories[0].title}</Badge>
 										)}
 										<span className="text-sm text-muted-foreground">
-											{formatDate(post.publishedAt, locale)}
+											{formatDate(post.publishedAt)}
 										</span>
 									</div>
 
@@ -219,7 +218,7 @@ export default function AuthorPageUI({ author, posts, dictionary, locale }: Auth
 
 					<div className="flex justify-center pt-8">
 						<Button asChild>
-							<Link href={`/${locale}/blog`}>{staticText.viewAllBlogPosts}</Link>
+							<Link href={'/blog'}>{staticText.viewAllBlogPosts}</Link>
 						</Button>
 					</div>
 				</div>
