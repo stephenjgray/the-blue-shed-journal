@@ -1,6 +1,6 @@
 import { defineQuery } from "groq";
 
-{ /* frontend/src/app/[locale]/layout.tsx */}
+{ /* frontend/src/app/layout.tsx */}
 
 export const LAYOUT_HEADER_QUERY = defineQuery(`*[
   _type == "header"
@@ -67,7 +67,7 @@ export const LAYOUT_FOOTER_QUERY = defineQuery(`*[
   }
 }`);
 
-{ /* frontend/src/app/[locale]/page.tsx */}
+{ /* frontend/src/app/page.tsx */}
 export const HOME_PAGE_QUERY = defineQuery(`*[
   _type == "page"
   && slug.current == "/"
@@ -108,7 +108,7 @@ export const HOME_PAGE_QUERY = defineQuery(`*[
   }
 }`);
 
-{ /* frontend/src/app/[locale]/[slug]/page.tsx */}
+{ /* frontend/src/app/[slug]/page.tsx */}
 export const PAGE_QUERY = defineQuery(`*[
   _type == "page"
   && slug.current == $slug
@@ -213,7 +213,7 @@ export const BLOG_POST_PAGE_QUERY = defineQuery(`*[
   }
 }`);
 
-{ /* frontend/src/app/[locale]/blog/author/[slug]/page.tsx */}
+{ /* frontend/src/app/blog/author/[slug]/page.tsx */}
 export const AUTHOR_PAGE_QUERY = defineQuery(`*[
   _type == "author"
   && defined(slug.current)
@@ -277,7 +277,7 @@ export const AUTHOR_PAGE_QUERY = defineQuery(`*[
   }
 }`);
 
-{ /* frontend/src/app/[locale]/blog/category/[slug]/page.tsx */}
+{ /* frontend/src/app/blog/category/[slug]/page.tsx */}
 export const CATEGORY_PAGE_QUERY = defineQuery(`*[
   _type == "category"
   && slug.current == $slug
@@ -354,7 +354,7 @@ export const CATEGORY_PAGE_QUERY = defineQuery(`*[
   }
 }`);
 
-{/* frontend/src/app/[locale]/blog/page.tsx */}
+{/* frontend/src/app/blog/page.tsx */}
 export const BLOG_INDEX_PAGE_QUERY = defineQuery(`{
   "config": *[
     _type == "blogPage"

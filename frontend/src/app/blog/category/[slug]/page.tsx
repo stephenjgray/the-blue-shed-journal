@@ -13,7 +13,6 @@ import { CATEGORY_PAGE_QUERY } from "@/sanity/queries";
 // Define PageParams interface
 interface PageParams {
   slug: string;
-  locale: Locale;
 }
 
 // Define SearchParams interface
@@ -27,7 +26,7 @@ interface PageProps {
   searchParams: Promise<SearchParams>; 
 }
 
-// Fetch the category by slug and locale using the composite query
+// Fetch the category by slug
 async function getCategory(slug: string): Promise<CATEGORY_PAGE_QUERYResult | null> {
   return client.fetch<CATEGORY_PAGE_QUERYResult | null>(CATEGORY_PAGE_QUERY, { slug });
 }
@@ -36,8 +35,8 @@ export async function generateMetadata(
   { params }: PageProps, 
   parent: ResolvingMetadata,
 ): Promise<Metadata> {
-  const { slug, locale } = await params;
-  const dictionary = await getDictionary(locale);
+  const { slug } = await params;
+  const dictionary = await getDictionary(i18n.defaultLocale);
   const result = await getCategory(slug);
 
   if (!result) {
@@ -60,11 +59,11 @@ export async function generateMetadata(
 
 // Generate static paths for all categories and locales
 export async function generateStaticParams(): Promise<PageParams[]> {
-  const locales = i18n.locales;
+  // const locales = i18n.locales;
   const allParams: PageParams[] = [];
 
-  for (const locale of locales) {
-    const categoriesForLocale = await client.fetch<Array<{ slug: { current: string } }>>(
+  // for (const locale of locales) {
+    const categories = await client.fetch<Array<{ slug: { current: string } }>>(
       `*[
         _type == "category"
       ]{
@@ -74,19 +73,19 @@ export async function generateStaticParams(): Promise<PageParams[]> {
         description
       }`
     );
-    categoriesForLocale.forEach(category => {
+    categories.forEach(category => {
       if (category.slug?.current) {
-        allParams.push({ slug: category.slug.current, locale: locale as Locale });
+        allParams.push({ slug: category.slug.current });
       }
     });
-  }
+  // }
   return allParams;
 }
 
 export default async function CategoryPage({
   params}: PageProps) { 
-  const { slug, locale } = await params;
-  const dictionary = await getDictionary(locale);
+  const { slug } = await params;
+  const dictionary = await getDictionary(i18n.defaultLocale);
   const result = await getCategory(slug);
 
   if (!result) {
@@ -98,7 +97,6 @@ export default async function CategoryPage({
       category={result} 
       posts={result.posts}
       dictionary={dictionary}
-      locale={locale} 
     />
   );
 }

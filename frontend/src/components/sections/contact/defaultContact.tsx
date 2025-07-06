@@ -55,7 +55,7 @@ export default function DefaultContact({
 	useEffect(() => {
 		const fetchDictionary = async () => {
 			try {
-				const dict = await getDictionary(locale);
+				const dict = await getDictionary(i18n.defaultLocale);
 				setDictionary(dict.contact);
 			} catch (error) {
 				console.warn('Failed to fetch dictionary:', error);

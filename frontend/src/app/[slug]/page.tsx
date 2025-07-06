@@ -4,17 +4,15 @@ import { notFound } from "next/navigation";
 import RenderSection from "@/components/sections/RenderSection";
 import type { Metadata } from "next";
 import { getDictionary } from "@/i18n/getDictionary";
-import { Locale } from "@/i18n/i18n-config";
 import { PAGE_QUERY } from "@/sanity/queries";
 
 
 // Define the PageParams interface specifically for params
 interface PageParams {
   slug: string;
-  locale: Locale;
 }
 
-async function getPageData(slug: string, locale: Locale): Promise<Page | null> {
+async function getPageData(slug: string): Promise<Page | null> {
   const page = await client.fetch<Page>(PAGE_QUERY, { slug });
   return page;
 }
@@ -23,9 +21,9 @@ async function getPageData(slug: string, locale: Locale): Promise<Page | null> {
 export async function generateMetadata({
   params,
 }: { params: Promise<PageParams> }): Promise<Metadata> {
-  const { slug, locale } = await params; // Await params here
-  const page = await getPageData(slug, locale);
-  const dictionary = await getDictionary(locale);
+  const { slug } = await params; // Await params here
+  const page = await getPageData(slug);
+  const dictionary = await getDictionary('en');
 
   if (!page) {
     return {
@@ -59,8 +57,8 @@ export default async function DynamicPage({
 }: {
   params: Promise<PageParams>; // Type params as a Promise
 }) {
-  const { slug, locale } = await params; // Await params here
-  const page = await getPageData(slug, locale);
+  const { slug } = await params; // Await params here
+  const page = await getPageData(slug);
 
   if (!page) {
     notFound();

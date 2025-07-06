@@ -10,7 +10,7 @@ import type { Locale } from "@/i18n/i18n-config";
 import { AUTHOR_PAGE_QUERY } from "@/sanity/queries";
 
 
-interface PageParams { slug: string; locale: Locale; }
+interface PageParams { slug: string; }
 interface PageProps { params: Promise<PageParams>; }
 
 // Intermediate type for a category as returned by AUTHOR_PAGE_QUERY (within a post)
@@ -69,9 +69,9 @@ async function getPageData(slug: string): Promise<AuthorPageQueryResult | null> 
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
-  const { slug, locale } = await params;
+  const { slug } = await params;
   const page = await getPageData(slug);
-  const dict = await getDictionary(locale);
+  const dict = await getDictionary(i18n.defaultLocale);
   if (!page?.name) {
     return { title: dict.notFound.authorTitle, description: dict.notFound.authorMessage };
   }
@@ -96,9 +96,9 @@ export async function generateStaticParams() {
 }
 
 export default async function AuthorPage({ params }: PageProps) {
-  const { slug, locale } = await params;
+  const { slug } = await params;
   const page = await getPageData(slug);
-  const dictionary = await getDictionary(locale);
+  const dictionary = await getDictionary(i18n.defaultLocale);
   if (!page) notFound();
 
   const author: Author = {
@@ -143,5 +143,5 @@ export default async function AuthorPage({ params }: PageProps) {
     };
   });
 
-  return <AuthorPageUI author={author} posts={posts} dictionary={dictionary} locale={locale} />;
+  return <AuthorPageUI author={author} posts={posts} dictionary={dictionary} />;
 }
