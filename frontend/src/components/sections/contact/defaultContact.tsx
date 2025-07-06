@@ -4,7 +4,7 @@ import { CalendarIcon, Check, MoveRight, PhoneCall } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
-import { useState, useContext, useEffect } from "react";
+import { useState, useEffect } from "react";
 import {
 	Popover,
 	PopoverContent,
@@ -16,8 +16,8 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import type { ContactSection } from "@/sanity/types";
 import type { Dictionary } from "@/i18n/getDictionary";
-import { LanguageContext } from "@/components/global/LanguageProvider";
 import { getDictionary } from "@/i18n/getDictionary";
+import { i18n } from "@/i18n/i18n-config";
 
 type DefaultContactProps = Pick<ContactSection, 
 	'badgeText' | 'heading' | 'description' | 'features' | 
@@ -43,13 +43,7 @@ export default function DefaultContact({
 	const [date, setDate] = useState<Date | undefined>(new Date());
 	const [dictionary, setDictionary] = useState<Dictionary['contact'] | null>(null);
 	
-	const context = useContext(LanguageContext);
-	
-	if (!context) {
-		throw new Error('DefaultContact must be used within a LanguageProvider');
-	}
-	
-	const { locale } = context;
+	const locale =  i18n.defaultLocale;
 	
 	// Fetch dictionary based on current locale
 	useEffect(() => {
