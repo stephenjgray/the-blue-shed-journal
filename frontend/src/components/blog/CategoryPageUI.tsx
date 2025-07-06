@@ -20,8 +20,8 @@ import {
 } from "@/components/ui/pagination";
 
 // Function to format date
-function formatDate(dateString: string, locale: string) {
-	return new Date(dateString).toLocaleDateString(locale, {
+function formatDate(dateString: string) {
+	return new Date(dateString).toLocaleDateString(i18n.defaultLocale, {
 		year: "numeric",
 		month: "short",
 		day: "numeric",
@@ -47,14 +47,12 @@ interface CategoryPageUIProps {
 	category: CategoryFromQuery;
 	posts: PostFromQuery[];
 	dictionary: Dictionary;
-	locale: Locale;
 }
 
 export default function CategoryPageUI({
 	category,
 	posts,
 	dictionary,
-	locale,
 }: CategoryPageUIProps) {
 	const [currentPage, setCurrentPage] = useState(1);
 	const postsPerPage = 6;
@@ -114,7 +112,7 @@ export default function CategoryPageUI({
 					{currentPosts.map((post) => (
 						<Link
 							key={post._id}
-							href={`/${locale}/blog/${post.slug?.current || ""}`}
+							href={`/blog/${post.slug?.current || ""}`}
 							className="flex flex-col gap-4 hover:opacity-90 transition-opacity group"
 						>
 							<div className="bg-muted rounded-md aspect-video overflow-hidden">
@@ -137,7 +135,7 @@ export default function CategoryPageUI({
 								) : null}
 								{post.publishedAt && (
 									<span className="text-sm text-muted-foreground">
-										{formatDate(post.publishedAt, locale)}
+										{formatDate(post.publishedAt)}
 									</span>
 								)}
 							</div>
@@ -183,7 +181,7 @@ export default function CategoryPageUI({
 							"No articles found in this category"}
 					</p>
 					<Button variant="outline" asChild>
-						<Link href={`/${locale}/blog`}>
+						<Link href={`/blog`}>
 							{dictionary.category?.viewAllBlogPosts || "View all posts"}
 						</Link>
 					</Button>
