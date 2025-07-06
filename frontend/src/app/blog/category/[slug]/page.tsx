@@ -62,7 +62,6 @@ export async function generateMetadata(
 export async function generateStaticParams(): Promise<PageParams[]> {
   const allParams: PageParams[] = [];
 
-  // for (const locale of locales) {
     const categories = await client.fetch<Array<{ slug: { current: string } }>>(
       `*[
         _type == "category"
@@ -78,7 +77,7 @@ export async function generateStaticParams(): Promise<PageParams[]> {
         allParams.push({ slug: category.slug.current });
       }
     });
-  // }
+    
   return allParams;
 }
 
