@@ -29,7 +29,8 @@ export function LanguageSwitcher({ variant = 'default', documentId }: LanguageSw
     throw new Error('LanguageSwitcher must be used within a LanguageProvider');
   }
   
-  const { locale, switchLanguage } = context;
+  const { switchLanguage } = context;
+  const locale = i18n.defaultLocale;;
 
   // Fetch dictionary based on current locale
   useEffect(() => {
