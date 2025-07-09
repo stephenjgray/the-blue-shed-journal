@@ -10,6 +10,7 @@ import { MoveRight } from "lucide-react";
 import type { BlogSection } from "@/sanity/types";
 import type { BLOG_POSTS_QUERYResult } from "@/sanity/types";
 import { defineQuery } from 'groq';
+import { formatDate } from "@/lib/utils";
 
 export const BLOG_POSTS_QUERY = defineQuery(`*[
   _type == "blogPost"
@@ -36,15 +37,6 @@ export const BLOG_POSTS_QUERY = defineQuery(`*[
 
 // Use the generated type instead of custom interface
 export type BlogPostWithData = BLOG_POSTS_QUERYResult[0];
-
-// Utility functions 
-export function formatDate(dateString: string, locale: string) {
-  return new Date(dateString).toLocaleDateString(locale, {
-    year: "numeric",
-    month: "short", 
-    day: "numeric",
-  });
-}
 
 export function getInitials(name: string) {
   if (!name) return "";

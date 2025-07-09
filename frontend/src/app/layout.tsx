@@ -49,7 +49,7 @@ export default async function RootLayout({
 }: {
 	children: React.ReactNode;
 }) {
-	const locale  = 'en';
+	const locale  = i18n.defaultLocale;
 	const { header, footer } = await getGlobals();
 	const dictionary = await getDictionary(locale);
 

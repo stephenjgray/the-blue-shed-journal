@@ -158,7 +158,7 @@ export const blogPost = defineType({
 		prepare(selection) {
 			const { title, authorName, media, date } = selection;
 			const formattedDate = date
-				? new Date(date).toLocaleDateString("pt-BR", {
+				? formatDate(date).toLocaleDateString("en", {
 						year: "numeric",
 						month: "short",
 						day: "numeric",

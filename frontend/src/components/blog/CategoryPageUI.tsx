@@ -8,7 +8,7 @@ import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import type { Dictionary } from "@/i18n/getDictionary";
-import type { Locale } from "@/i18n/i18n-config";
+import type { i18n } from "@/i18n/i18n-config";
 import type { CATEGORY_PAGE_QUERYResult } from "@/sanity/types";
 import {
 	Pagination,
@@ -18,15 +18,7 @@ import {
 	PaginationNext,
 	PaginationPrevious,
 } from "@/components/ui/pagination";
-
-// Function to format date
-function formatDate(dateString: string, locale: string) {
-	return new Date(dateString).toLocaleDateString(locale, {
-		year: "numeric",
-		month: "short",
-		day: "numeric",
-	});
-}
+import { formatDate } from "@/lib/utils";
 
 // Function to get author initials
 function getInitials(name: string) {
@@ -47,14 +39,12 @@ interface CategoryPageUIProps {
 	category: CategoryFromQuery;
 	posts: PostFromQuery[];
 	dictionary: Dictionary;
-	locale: Locale;
 }
 
 export default function CategoryPageUI({
 	category,
 	posts,
 	dictionary,
-	locale,
 }: CategoryPageUIProps) {
 	const [currentPage, setCurrentPage] = useState(1);
 	const postsPerPage = 6;
@@ -114,7 +104,7 @@ export default function CategoryPageUI({
 					{currentPosts.map((post) => (
 						<Link
 							key={post._id}
-							href={`/${locale}/blog/${post.slug?.current || ""}`}
+							href={`/blog/${post.slug?.current || ""}`}
 							className="flex flex-col gap-4 hover:opacity-90 transition-opacity group"
 						>
 							<div className="bg-muted rounded-md aspect-video overflow-hidden">
@@ -137,7 +127,7 @@ export default function CategoryPageUI({
 								) : null}
 								{post.publishedAt && (
 									<span className="text-sm text-muted-foreground">
-										{formatDate(post.publishedAt, locale)}
+										{formatDate(post.publishedAt)}
 									</span>
 								)}
 							</div>
@@ -183,7 +173,7 @@ export default function CategoryPageUI({
 							"No articles found in this category"}
 					</p>
 					<Button variant="outline" asChild>
-						<Link href={`/${locale}/blog`}>
+						<Link href={`/blog`}>
 							{dictionary.category?.viewAllBlogPosts || "View all posts"}
 						</Link>
 					</Button>
