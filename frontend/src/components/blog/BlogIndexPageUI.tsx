@@ -16,6 +16,7 @@ import {
   PaginationPrevious 
 } from "@/components/ui/pagination";
 import { usePathname } from "next/navigation";
+import { i18n } from "@/i18n/i18n-config";
 
 // Function to format date
 function formatDate(dateString: string) {

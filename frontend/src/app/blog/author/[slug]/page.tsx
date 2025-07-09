@@ -7,7 +7,7 @@ import type { ExpandedBlogPost } from "@/components/blog/AuthorPageUI";
 import AuthorPageUI from "@/components/blog/AuthorPageUI";
 import { getDictionary } from "@/i18n/getDictionary";
 import { AUTHOR_PAGE_QUERY } from "@/sanity/queries";
-
+import { i18n } from "@/i18n/i18n-config";
 
 interface PageParams { slug: string; }
 interface PageProps { params: Promise<PageParams>; }

@@ -8,7 +8,7 @@ import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import type { Dictionary } from "@/i18n/getDictionary";
-import type { Locale } from "@/i18n/i18n-config";
+import type { i18n } from "@/i18n/i18n-config";
 import type { CATEGORY_PAGE_QUERYResult } from "@/sanity/types";
 import {
 	Pagination,

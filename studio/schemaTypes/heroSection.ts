@@ -212,7 +212,10 @@ export const heroSection = defineType({
               type: "url",
               description: descriptions.videoUrlDescription,
               validation: (rule) => 
-                rule.required().error(validation.heroButtonUrlRequired),
+                rule.uri({
+                  allowRelative: true,
+                  scheme: ["http", "https", "mailto", "tel"]
+                }).error(validation.bannerButtonUrlInvalid),
             }),
             defineField({
               name: "autoplay",

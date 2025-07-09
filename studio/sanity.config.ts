@@ -7,8 +7,6 @@ import { unsplashImageAsset } from "sanity-plugin-asset-source-unsplash";
 import { structure } from './structure';
 import Logo from "./components/Logo";
 
-console.log(process.env);
-
 const projectId = process.env.SANITY_STUDIO_PROJECT_ID || "your-project-id";
 const dataset = process.env.SANITY_STUDIO_DATASET || "production";
 

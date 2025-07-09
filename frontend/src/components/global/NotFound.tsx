@@ -21,14 +21,7 @@ export default function NotFound({
 	linkText,
 	dictionary,
 }: NotFoundProps) {
-	const pathname = usePathname();
-	
-	// Extract locale from pathname
-	const pathSegments = pathname.split('/').filter(Boolean);
-	const potentialLocale = pathSegments[0] as Locale;
-	const locale = i18n.locales.includes(potentialLocale) ? potentialLocale : i18n.defaultLocale;
-	
-	const localizedHref = linkHref ? `/${locale}${linkHref.startsWith('/') ? linkHref : `/${linkHref}`}` : `/${locale}`;
+	const localizedHref = linkHref ? `${linkHref.startsWith('/') ? linkHref : `/${linkHref}`}` : `/`;
 	
 	return (
 		<div className="container mx-auto px-4 md:px-6 py-24 flex flex-col items-center justify-center text-center min-h-[calc(100vh-10rem)]">
