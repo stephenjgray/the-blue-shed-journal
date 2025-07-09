@@ -11,7 +11,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Github, Globe, Instagram, Linkedin, Mail, Twitter, Youtube } from "lucide-react";
 import type { Dictionary } from "@/i18n/getDictionary";
-import { i18n } from "@/i18n/i18n-config";
+import { formatDate } from "@/lib/utils";
 
 export interface ExpandedBlogPost extends Omit<BlogPost, "categories" | "author"> {
 	categories?: Category[];
@@ -33,16 +33,6 @@ const SocialIcons = {
 	website: Globe,
 	youtube: Youtube,
 } as const;
-
-// Helper function to format date
-function formatDate(dateString?: string) {
-	if (!dateString) return "";
-	return new Date(dateString).toLocaleDateString(i18n.defaultLocale, {
-		year: "numeric",
-		month: "short",
-		day: "numeric",
-	});
-}
 
 // Function to get author initials for avatar fallback
 function getInitials(name?: string) {

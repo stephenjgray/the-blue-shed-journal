@@ -16,16 +16,8 @@ import {
   PaginationPrevious 
 } from "@/components/ui/pagination";
 import { usePathname } from "next/navigation";
-import { i18n } from "@/i18n/i18n-config";
+import { formatDate } from "@/lib/utils";
 
-// Function to format date
-function formatDate(dateString: string) {
-  return new Date(dateString).toLocaleDateString(i18n.defaultLocale, {
-    year: "numeric",
-    month: "short", 
-    day: "numeric",
-  });
-}
 
 // Function to get author initials
 function getInitials(name: string) {

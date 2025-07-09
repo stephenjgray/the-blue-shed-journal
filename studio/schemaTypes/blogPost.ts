@@ -7,6 +7,7 @@ import {
 import { defineField, defineType, defineArrayMember } from "sanity";
 import { isUniqueOtherThanLanguage } from "../utils/isUniqueOtherThanLanguage";
 import { fields, groups, documents, descriptions, validation, sanityOptions } from "../dictionary";
+import { formatDate } from "@/lib/utils";
 
 // Define field groups
 const blogPostGroups = [
@@ -158,11 +159,7 @@ export const blogPost = defineType({
 		prepare(selection) {
 			const { title, authorName, media, date } = selection;
 			const formattedDate = date
-				? new Date(date).toLocaleDateString("pt-BR", {
-						year: "numeric",
-						month: "short",
-						day: "numeric",
-					})
+				? formatDate(date)
 				: descriptions.notPublished;
 
 			return {

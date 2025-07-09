@@ -33,6 +33,7 @@ import type {
   Slug as SanitySlug // Import Slug as SanitySlug to avoid naming conflicts if any
 } from "@/sanity/types";
 import { BlogShareButton } from "./BlogShareButton";
+import { formatDate } from "@/lib/utils";
 
 // Define the structure that represents post data after it's been fetched
 // and references have been expanded - modified to match BlogPostData
@@ -309,11 +310,7 @@ export default function BlogPostPage({ post, dictionary }: BlogPostPageProps) {
 							</Link>
 							<div className="flex items-center text-sm text-muted-foreground">
 								<span>
-									{new Date(post.publishedAt).toLocaleDateString("en", {
-										year: "numeric",
-										month: "short",
-										day: "numeric",
-									})}
+									{formatDate(post.publishedAt)}
 								</span>
 								<span className="mx-2">•</span>
 								<span>

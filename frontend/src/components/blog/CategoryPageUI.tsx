@@ -18,15 +18,7 @@ import {
 	PaginationNext,
 	PaginationPrevious,
 } from "@/components/ui/pagination";
-
-// Function to format date
-function formatDate(dateString: string) {
-	return new Date(dateString).toLocaleDateString(i18n.defaultLocale, {
-		year: "numeric",
-		month: "short",
-		day: "numeric",
-	});
-}
+import { formatDate } from "@/lib/utils";
 
 // Function to get author initials
 function getInitials(name: string) {
